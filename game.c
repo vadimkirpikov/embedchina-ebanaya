@@ -10,46 +10,40 @@ void get_center(const char* text, int *center) {
     center[0] = (row / 2);
     center[1] = (col - textLength) / 2;
 }
-// void replaceThem(char& ch1, char& ch2) {
-//     char n1 = ch1;
-//     ch1 = ch2;
-//     ch2 = n1;
-// }
-
-// void replace_mas(char* text, int emptyPos, int cursorPos) {
-//     replaceThem(text[emptyPos], text[cursorPos]);
-//     replaceThem(text[emptyPos+1], text[cursorPos+1]);
-// }
 
 int main() {
-    initscr();
-    cbreak();
-    noecho();
-    keypad(stdscr, TRUE);
-    //srand(time(NULL));
+    initscr();              
+    cbreak();               
+    noecho();               
+    keypad(stdscr, TRUE); 
 
     char oneOrTwo[2] = {'1', '2'};
     int center[2];
     const char* text = "PRIVET QWE";
     get_center(text, center);
-    int c = 1;
-    int cPosX = center[0];
-    int cPosY = center[1];
-    while ((c = getch())!= 48) {
-        move(cPosY, cPosX);
-        mvprintw(center[0], center[1], "%s", text);
-        refresh();
-        c = getch();
-        if (c == KEY_RIGHT) {
-            cPosX--;
-        }
-        else if (c == KEY_LEFT) {
-            cPosX++;
-        }
-    }
+
+    int c = 0;
+    int cPosY = center[0];
+    int cPosX = center[1];
+    mvprintw(cPosY, cPosX, "%s", text);
+    move(cPosY, cPosX);
     refresh();
 
-    getch();
-    endwin();
+    while ((c = getch()) != 48) {
+        switch (c) {
+            case KEY_RIGHT:
+                cPosX++;
+                break;
+            case KEY_LEFT:
+                cPosX--;
+                break;
+        }
+        clear();
+        mvprintw(center[0], center[1], "%s", text);
+        move(cPosY, cPosX);
+        refresh();
+    }
+
+    endwin();  // Завершаем работу с ncurses
     return 0;
 }
