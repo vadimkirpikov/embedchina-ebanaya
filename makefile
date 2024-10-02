@@ -1,7 +1,8 @@
-all: compile
+all: start
 
-compile: clean
-compile: startgame
+start: startgame
+	./startgame
+
 
 startgame: game.o
 	gcc game.o -lncurses -o startgame
@@ -9,6 +10,3 @@ startgame: game.o
 
 game.o: game.c
 	gcc -c game.c
-
-clean:
-	rm -f *.o startgame
